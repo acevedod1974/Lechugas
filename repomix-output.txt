@@ -1,0 +1,819 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+================================================================
+File Summary
+================================================================
+
+Purpose:
+--------
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+
+File Format:
+------------
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Multiple file entries, each consisting of:
+  a. A separator line (================)
+  b. The file path (File: path/to/file)
+  c. Another separator line
+  d. The full contents of the file
+  e. A blank line
+
+Usage Guidelines:
+-----------------
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+
+Notes:
+------
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+
+Additional Info:
+----------------
+
+================================================================
+Directory Structure
+================================================================
+.bolt/config.json
+.bolt/prompt
+.gitignore
+.repomix/bundles.json
+eslint.config.js
+index.html
+package.json
+postcss.config.js
+src/App.tsx
+src/components/ConversionButton.tsx
+src/components/ConversionResult.tsx
+src/components/CurrencyInput.tsx
+src/components/LastUpdate.tsx
+src/components/RateDisplay.tsx
+src/components/RateToggle.tsx
+src/index.css
+src/main.tsx
+src/services/api.ts
+src/services/exchangeRates.ts
+src/types/currency.ts
+src/utils/currency.ts
+src/vite-env.d.ts
+tailwind.config.js
+tsconfig.app.json
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+
+================================================================
+Files
+================================================================
+
+================
+File: .bolt/config.json
+================
+{
+  "template": "bolt-vite-react-ts"
+}
+
+================
+File: .bolt/prompt
+================
+For all designs I ask you to make, have them be beautiful, not cookie cutter. Make webpages that are fully featured and worthy for production.
+
+By default, this template supports JSX syntax with Tailwind CSS classes, React hooks, and Lucide React for icons. Do not install other packages for UI themes, icons, etc unless absolutely necessary or I request them.
+
+Use icons from lucide-react for logos.
+
+Use stock photos from unsplash where appropriate, only valid URLs you know exist. Do not download the images, only link to them in image tags.
+
+================
+File: .gitignore
+================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+================
+File: .repomix/bundles.json
+================
+{
+  "bundles": {}
+}
+
+================
+File: eslint.config.js
+================
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config(
+  { ignores: ['dist'] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  }
+);
+
+================
+File: index.html
+================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+================
+File: package.json
+================
+{
+  "name": "vite-react-typescript-starter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "lucide-react": "^0.344.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^9.9.1",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "globals": "^15.9.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.3.0",
+    "vite": "^6.2.2"
+  }
+}
+
+================
+File: postcss.config.js
+================
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+================
+File: src/App.tsx
+================
+import React, { useState, useEffect } from 'react';
+import { CurrencyInput } from './components/CurrencyInput';
+import { RateToggle } from './components/RateToggle';
+import { RateDisplay } from './components/RateDisplay';
+import { ConversionButton } from './components/ConversionButton';
+import { ConversionResult } from './components/ConversionResult';
+import { fetchExchangeRates } from './services/exchangeRates';
+import { validateAmount, convertCurrency } from './utils/currency';
+import { ExchangeRate, ConversionResult as ConversionResultType } from './types/currency';
+import { RefreshCw } from 'lucide-react';
+
+function App() {
+  const [amount, setAmount] = useState<string>('');
+  const [selectedRate, setSelectedRate] = useState<'BCV' | 'PARALLEL' | 'PROMEDIO'>('BCV');
+  const [rates, setRates] = useState<ExchangeRate | null>(null);
+  const [error, setError] = useState<string>('');
+  const [result, setResult] = useState<ConversionResultType | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [autoUpdate, setAutoUpdate] = useState<boolean>(true);
+
+  const updateRates = async () => {
+    setLoading(true);
+    try {
+      const newRates = await fetchExchangeRates();
+      setRates(newRates);
+      // If there's an amount, recalculate with new rates
+      if (amount && !error) {
+        handleConversion(newRates);
+      }
+    } catch (error) {
+      console.error('Failed to fetch rates:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    updateRates();
+    // Refresh rates every 5 minutes
+    const interval = setInterval(updateRates, 300000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleAmountChange = (value: string) => {
+    setAmount(value);
+    setError('');
+    setAutoUpdate(true); // Re-enable auto-update when amount changes
+    
+    if (!value) {
+      setResult(null);
+      return;
+    }
+
+    if (!validateAmount(value)) {
+      setError('Please enter a valid positive number');
+      setResult(null);
+    }
+  };
+
+  const handleConversion = (currentRates = rates) => {
+    if (!amount || !currentRates || error) {
+      return;
+    }
+
+    const rate = currentRates[selectedRate.toLowerCase() as keyof typeof currentRates];
+    const lastUpdate = currentRates.lastUpdate[selectedRate.toLowerCase() as keyof typeof currentRates.lastUpdate];
+    
+    const conversionResult = convertCurrency(
+      parseFloat(amount),
+      rate,
+      lastUpdate,
+      selectedRate
+    );
+    
+    setResult(conversionResult);
+  };
+
+  // Auto-update effect when typing
+  useEffect(() => {
+    if (autoUpdate && rates && amount && !error) {
+      handleConversion();
+    }
+  }, [amount, autoUpdate]);
+
+  useEffect(() => {
+    if (rates && amount && !error) {
+      handleConversion();
+      setAutoUpdate(false); // Disable auto-update when manually selecting a rate
+    }
+  }, [selectedRate]); // Re-run conversion when rate type changes
+
+  const isConversionDisabled = !amount || !!error || !rates;
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
+        <div className="space-y-6">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900">USD to VES Converter</h1>
+            <p className="mt-2 text-sm text-gray-600">
+              Convert US Dollars to Venezuelan Bolívares
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <CurrencyInput
+              value={amount}
+              onChange={handleAmountChange}
+              error={error}
+            />
+
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <RateToggle
+                selectedRate={selectedRate}
+                onRateChange={(rate) => {
+                  setSelectedRate(rate);
+                  setAutoUpdate(false);
+                }}
+              />
+              
+              <button
+                onClick={updateRates}
+                className="inline-flex items-center px-3 py-2 text-sm text-gray-600 hover:text-gray-900"
+              >
+                <RefreshCw className={`h-4 w-4 mr-1 ${loading ? 'animate-spin' : ''}`} />
+                Refresh Rates
+              </button>
+            </div>
+
+            {rates && <RateDisplay rates={rates} selectedRate={selectedRate} />}
+
+            <ConversionButton
+              onClick={() => handleConversion()}
+              disabled={isConversionDisabled}
+            />
+
+            {result && !error && <ConversionResult result={result} />}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+================
+File: src/components/ConversionButton.tsx
+================
+import React from 'react';
+import { ArrowRightCircle } from 'lucide-react';
+
+interface ConversionButtonProps {
+  onClick: () => void;
+  disabled: boolean;
+}
+
+export const ConversionButton: React.FC<ConversionButtonProps> = ({ onClick, disabled }) => {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-full mt-4 flex items-center justify-center px-4 py-2 rounded-md text-white
+        ${disabled 
+          ? 'bg-gray-300 cursor-not-allowed' 
+          : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+        } transition-colors duration-200`}
+    >
+      <span className="mr-2">Convert</span>
+      <ArrowRightCircle className="h-5 w-5" />
+    </button>
+  );
+};
+
+================
+File: src/components/ConversionResult.tsx
+================
+import React from 'react';
+import { LastUpdate } from './LastUpdate';
+import { ConversionResult as ConversionResultType } from '../types/currency';
+import { formatVES } from '../utils/currency';
+
+interface ConversionResultProps {
+  result: ConversionResultType;
+}
+
+export const ConversionResult: React.FC<ConversionResultProps> = ({ result }) => {
+  return (
+    <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+      <div className="text-sm text-gray-600">Conversion Result:</div>
+      <div className="text-2xl font-bold text-gray-900">
+        {formatVES(result.vesAmount)}
+      </div>
+      <div className="text-xs text-gray-500 mt-1">
+        Using {result.rateType} rate
+      </div>
+      <LastUpdate timestamp={result.lastUpdate} />
+    </div>
+  );
+};
+
+================
+File: src/components/CurrencyInput.tsx
+================
+import React from 'react';
+import { DollarSign } from 'lucide-react';
+
+interface CurrencyInputProps {
+  value: string;
+  onChange: (value: string) => void;
+  error?: string;
+}
+
+export const CurrencyInput: React.FC<CurrencyInputProps> = ({
+  value,
+  onChange,
+  error,
+}) => {
+  return (
+    <div className="relative">
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <DollarSign className="h-5 w-5 text-gray-400" />
+        </div>
+        <input
+          type="number"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Enter amount in USD"
+          min="0"
+          step="0.01"
+        />
+      </div>
+      {error && (
+        <p className="mt-1 text-sm text-red-600">{error}</p>
+      )}
+    </div>
+  );
+};
+
+================
+File: src/components/LastUpdate.tsx
+================
+import React from 'react';
+import { Clock } from 'lucide-react';
+
+interface LastUpdateProps {
+  timestamp: string;
+}
+
+export const LastUpdate: React.FC<LastUpdateProps> = ({ timestamp }) => {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
+
+  return (
+    <div className="flex items-center text-xs text-gray-500">
+      <Clock className="h-3 w-3 mr-1" />
+      Last updated: {formatDate(timestamp)}
+    </div>
+  );
+};
+
+================
+File: src/components/RateDisplay.tsx
+================
+import React from 'react';
+import { LastUpdate } from './LastUpdate';
+import { ExchangeRate } from '../types/currency';
+import { formatVES } from '../utils/currency';
+
+interface RateDisplayProps {
+  rates: ExchangeRate;
+  selectedRate: 'BCV' | 'PARALLEL' | 'PROMEDIO';
+}
+
+export const RateDisplay: React.FC<RateDisplayProps> = ({ rates, selectedRate }) => {
+  const currentRate = rates[selectedRate.toLowerCase() as keyof typeof rates];
+  const lastUpdate = rates.lastUpdate[selectedRate.toLowerCase() as keyof typeof rates.lastUpdate];
+
+  return (
+    <div className="text-sm text-gray-600">
+      <div>Current Rate: {formatVES(currentRate)}/USD</div>
+      <LastUpdate timestamp={lastUpdate} />
+    </div>
+  );
+};
+
+================
+File: src/components/RateToggle.tsx
+================
+import React from 'react';
+
+interface RateToggleProps {
+  selectedRate: 'BCV' | 'PARALLEL' | 'PROMEDIO';
+  onRateChange: (rate: 'BCV' | 'PARALLEL' | 'PROMEDIO') => void;
+}
+
+export const RateToggle: React.FC<RateToggleProps> = ({ selectedRate, onRateChange }) => {
+  const rateButtons = [
+    { id: 'BCV', label: 'BCV Rate' },
+    { id: 'PARALLEL', label: 'Parallel Rate' },
+    { id: 'PROMEDIO', label: 'Promedio' },
+  ] as const;
+
+  return (
+    <div className="inline-flex rounded-lg border border-gray-200 p-1 bg-gray-50">
+      {rateButtons.map(({ id, label }) => (
+        <button
+          key={id}
+          onClick={() => onRateChange(id)}
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 ease-in-out
+            ${selectedRate === id
+              ? 'bg-blue-600 text-white shadow-sm'
+              : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+            }`}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+================
+File: src/index.css
+================
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+================
+File: src/main.tsx
+================
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+
+================
+File: src/services/api.ts
+================
+import axios from 'axios';
+
+const API_BASE_URL = 'https://pydolarve.org/api/v1/dollar';
+
+export interface RateResponse {
+  price: number;
+  last_update: string;
+}
+
+export const fetchBCVRate = async (): Promise<RateResponse> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}?monitor=bcv`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching BCV rate:', error);
+    throw error;
+  }
+};
+
+export const fetchParallelRate = async (): Promise<RateResponse> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}?monitor=enparalelovzla`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching parallel rate:', error);
+    throw error;
+  }
+};
+
+================
+File: src/services/exchangeRates.ts
+================
+import { ExchangeRate } from '../types/currency';
+import { fetchBCVRate, fetchParallelRate } from './api';
+
+export const fetchExchangeRates = async (): Promise<ExchangeRate> => {
+  try {
+    const [bcvData, parallelData] = await Promise.all([
+      fetchBCVRate(),
+      fetchParallelRate()
+    ]);
+
+    const promedioRate = (bcvData.price + parallelData.price) / 2;
+    const promedioTimestamp = new Date().toISOString();
+
+    return {
+      bcv: bcvData.price,
+      parallel: parallelData.price,
+      promedio: promedioRate,
+      lastUpdate: {
+        bcv: bcvData.last_update,
+        parallel: parallelData.last_update,
+        promedio: promedioTimestamp
+      }
+    };
+  } catch (error) {
+    console.error('Error fetching rates:', error);
+    // Fallback rates in case of API failure
+    const now = new Date().toISOString();
+    return {
+      bcv: 35.50,
+      parallel: 37.80,
+      promedio: 36.65,
+      lastUpdate: {
+        bcv: now,
+        parallel: now,
+        promedio: now
+      }
+    };
+  }
+};
+
+================
+File: src/types/currency.ts
+================
+export interface ExchangeRate {
+  bcv: number;
+  parallel: number;
+  promedio: number;
+  lastUpdate: {
+    bcv: string;
+    parallel: string;
+    promedio: string;
+  };
+}
+
+export interface ConversionResult {
+  usdAmount: number;
+  vesAmount: number;
+  rate: number;
+  rateType: 'BCV' | 'PARALLEL' | 'PROMEDIO';
+  lastUpdate: string;
+}
+
+================
+File: src/utils/currency.ts
+================
+import { ConversionResult } from '../types/currency';
+
+export const formatVES = (amount: number): string => {
+  return new Intl.NumberFormat('es-VE', {
+    style: 'currency',
+    currency: 'VES',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+};
+
+export const validateAmount = (value: string): boolean => {
+  const amount = parseFloat(value);
+  return !isNaN(amount) && amount > 0;
+};
+
+export const convertCurrency = (
+  amount: number,
+  rate: number,
+  lastUpdate: string,
+  rateType: 'BCV' | 'PARALLEL'
+): ConversionResult | null => {
+  try {
+    if (amount <= 0) return null;
+    
+    const vesAmount = amount * rate;
+    return {
+      usdAmount: amount,
+      vesAmount,
+      rate,
+      rateType,
+      lastUpdate
+    };
+  } catch (error) {
+    console.error('Error during conversion:', error);
+    return null;
+  }
+};
+
+================
+File: src/vite-env.d.ts
+================
+/// <reference types="vite/client" />
+
+================
+File: tailwind.config.js
+================
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+================
+File: tsconfig.app.json
+================
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"]
+}
+
+================
+File: tsconfig.json
+================
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
+
+================
+File: tsconfig.node.json
+================
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["vite.config.ts"]
+}
+
+================
+File: vite.config.ts
+================
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  optimizeDeps: {
+    exclude: ['lucide-react'],
+  },
+});
+
+
+
+================================================================
+End of Codebase
+================================================================
