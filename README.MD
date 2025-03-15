@@ -22,12 +22,11 @@ This is a **React + TypeScript** project that allows users to convert US Dollars
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-username/your-repo-name.git
    cd your-repo-name
    ```
-
-````
 
 2. Install dependencies:
 
@@ -108,4 +107,3 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
-````
