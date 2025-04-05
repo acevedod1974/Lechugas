@@ -13,15 +13,20 @@ export const RateToggle: React.FC<RateToggleProps> = ({ selectedRate, onRateChan
   ] as const;
 
   return (
-    <div className="inline-flex rounded-lg border border-gray-200 p-1 bg-gray-50">
+    <div
+      role="group"
+      aria-label="Exchange rate selection"
+      className="inline-flex rounded-lg border border-gray-200 dark:border-gray-700 p-1 bg-gray-50 dark:bg-gray-800"
+    >
       {rateButtons.map(({ id, label }) => (
         <button
           key={id}
           onClick={() => onRateChange(id)}
-          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 ease-in-out
+          aria-pressed={selectedRate === id}
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500
             ${selectedRate === id
-              ? 'bg-blue-600 text-white shadow-sm'
-              : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+              ? 'bg-primary-500 text-white shadow-sm'
+              : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}
         >
           {label}
